@@ -14,6 +14,8 @@
 
 #TODO this is just preliminary code.... Make major changes to sructure or content as needed
 
+#TODO make a function called characterImage(characterType,characterColor) and returns an image of character 
+
 def chooseCharacterType(): # Wizard, Barbarian, Archer
     #TODO make this function work
     """ Prompts user to choose a character type and returns that type """

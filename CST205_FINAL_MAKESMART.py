@@ -16,23 +16,54 @@
 
 #TODO make a function called characterImage(characterType,characterColor) and returns an image of character 
 
-def chooseCharacterType(): # Wizard, Barbarian, Archer
-    #TODO make this function work
-    """ Prompts user to choose a character type and returns that type """
+def getSelection(msg, list):
+    """ Presents the user with a given list of options """
+    """ Checks to see that they have entered a valid option """
+    """ Returns the result """
+    
+    # Display the list of available options
+    for i in xrange(0, len(list)):
+        msg += "\n" + str(i+1) + " - " + list[i].title()
+    
+    while true:
+         # Get user input
+        selection = requestString(msg) 
+        
+        # If user selects an option using string input  
+        if selection.upper() in list:
+            return selection.upper()
+        # If user selects an option using integer input
+        elif selection.isdigit() and int(selection) > 0 and int(selection) < len(list)+1:
+            return list[int(selection)-1]
+        # If user enters invalid input
+        else:
+            showInformation("Invalid input")
+         
 
+def chooseClass(): # Wizard, Barbarian, Archer
+    """ Prompts user to choose a character class and returns that class """
+    
+    classes = ['WIZARD', 'BARBARIAN', 'ARCHER']
+    msg = "Please select a class"
+    return getSelection(msg, classes)
+    
+      
 def chooseCharacterColor(): # black, blue, blonde
-    #TODO make this function work
     """ Shows user a slection of character color choices """
     """ Prompts user to pick a color for their character """
     """ Returns the character color """
+    
+    colors = ['BLACK', 'BLUE', 'BLONDE']
+    msg = "Please select a character color"
+    return getSelection(msg, colors)
 
-def chooseCharacterVoice(voice):
+def chooseCharacterVoice():
     #TODO make this function work
     """ Prompts user to choose a character voice """
-    """ manipulates a sound file and returns it """
-    newVoice = voice
-    # alter newVoice here
-    return newVoice
+    
+    voices = ['HIGH', 'MEDIUM', 'LOW']
+    msg = "Please select a character voice"
+    return getSelection(msg, voices)
 
 def welcomeMessage():
     #TODO make this function work

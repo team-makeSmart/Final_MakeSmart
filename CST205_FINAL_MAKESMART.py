@@ -14,7 +14,27 @@
 
 #TODO this is just preliminary code.... Make major changes to sructure or content as needed
 
-#TODO make a function called characterImage(characterType,characterColor) and returns an image of character 
+#TODO make a function called characterImage(characterType,characterColor) and returns an image of character
+
+import os
+
+def getPicture(fileName):
+    """ Returns a picture from the folder same folder that that the program is being run in """
+    """ If the picture is not found, it prompts the user to select a picture ""
+
+    # Get the programs working directory
+    directory = os.path.dirname(__file__) 
+    
+    # Make full path name
+    path = directory + "\\" + fileName
+    
+    # Open the file if it exists
+    if os.path.exists(path):
+        return makePicture(path)
+    # Manually select file if not found
+    else:
+        showInformation("File not found\nPlease select " + fileName)
+        return makePicture(pickAFile())
 
 def getSelection(msg, list):
     """ Presents the user with a given list of options """

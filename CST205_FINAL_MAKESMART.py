@@ -18,6 +18,92 @@
 
 import os
 
+
+def getSound():
+# TODO remove this function before final submission as it won't be needed in the program.... just here for testing purposes
+  filePath = pickAFile()
+  soundObject = makeSound(filePath)
+  return soundObject
+
+
+def cMaj():
+  """ Plays c major chord (C-E-G) for game using diatonic scale"""
+  playNote(60,250,130)  #play c note
+  playNote(64,250,130) #play e note
+  playNote(69,250,130) #play g note 
+  
+def fMaj():
+  #TODO make sure this is in fact an f maj triad?  This might be wrong
+  """ Plays an f Major chord (D-E-G) for game using diatonic scale"""
+  playNote(60,250,130) #play D note
+  playNote(65,250,130) #play F note
+  playNote(69,250,130) #play G note   
+  
+def dMin():
+  """ Plays a d minor chord (D-F-E) for game using diatonic scale"""
+  playNote(62,250,130)  #play D note
+  playNote(65,250,130) #play F note
+  playNote(69,250,130) #play G note    
+
+def playSong(numOfLoops):
+  """ Plays a theme song for the game """
+  """ Args: integer value defines how many times the theme song will loop """
+  for x in range(0,numOfLoops):
+    cMaj()
+    dMin()
+    fMaj()
+    dMin()
+  #fade away  
+  playNote(60, 250,130)
+  playNote(64, 250,100)    
+  playNote(69, 250,70)
+   
+   
+   
+def copy(soundOne, soundTwo, start):
+  #TODO this function could be refactored to be a little bit simpler than it is... 
+  #TODO are two for loops really needed?
+   """This functiontion copes the second sound file into the first at the start argument """
+   """Args:  """
+   """      soundOne: A sound object"""
+   """      soundTwo: A sound object that will be copied into soundOne"""
+   """      start: Integer value that represents the start of where soundTwo will be copied into soundOne"""
+   """Returns: """
+   """      A new sound with sound one copied into sound one.  Note sampling rate will be same as soundOne."""
+
+   lenSoundOne = getLength(soundOne)
+   lenSoundTwo = getLength(soundTwo)
+   samplingRate = int(getSamplingRate(soundOne))
+   newSound = makeEmptySound(lenSoundOne, samplingRate)
+   index = int(start);
+   #First add in sound one
+   for i in range(0, lenSoundOne):
+      value = getSampleValueAt(soundOne, i)
+      setSampleValueAt(newSound, i, value)
+   #Second add in sound 2
+   for i in range(0, lenSoundTwo):
+      value = getSampleValueAt(soundTwo, i)
+      setSampleValueAt(newSound, index, value)
+      index = index + 1
+   return newSound   
+   
+def changePitch(sound, delta):
+  """ Changes the pitch of a sound object """
+  """ Args:  """
+  """     sound: sound object received for manipulation """
+  """     delta: allows for a value from .5 to 1.5 to change the pitch.  1.5 == higher pitch, .5 == lower pitch """ 
+  """ Returns: """
+  """       A sound object with a new pitch """  
+  #TODO could add some low level validation to ensure delta arg is within range
+  samplingRate = getSamplingRate(sound)
+  numSamples = getNumSamples(sound)
+  newSound = makeEmptySound(numSamples,int(samplingRate*delta)) #by changing the sampling rate the frequency adjusts the pitch
+  newSound = copy(newSound,sound,0)
+  return(newSound)  
+
+
+
+
 def getPicture(fileName):
     """ Returns a picture from the folder same folder that that the program is being run in """
     """ If the picture is not found, it prompts the user to select a picture """

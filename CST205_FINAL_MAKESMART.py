@@ -122,6 +122,25 @@ def getPicture(fileName):
         showInformation("File not found\nPlease select " + fileName)
         return makePicture(pickAFile())
         
+def getVoice(fileName):
+    """ Returns a sound from the same folder that that the program is being run in """
+    """ If the sound is not found, it prompts the user to select a sound """
+    """ Args: """
+    """     fileName: string argument for name of file contained in top directory of program """
+
+    # Get the programs working directory
+    directory = os.path.dirname(__file__) 
+    
+    # Make full path name
+    path = directory + "\\" + fileName
+    
+    # Open the file if it exists
+    if os.path.exists(path):
+        return makeSound(path)
+    # Manually select file if not found
+    else:
+        showInformation("File not found\nPlease select " + fileName)
+        return makeSound(pickAFile())        
         
 def colorize(picOriginal, picColoredArea, targetColor, threshold, tintColor, multiplier):
     """ Takes a picture and a reference picture and tints the area in the original picture based on the colored area in the reference picture """
@@ -178,7 +197,7 @@ def getSelection(msg, list):
             return selection.upper()
         # If user selects an option using integer input
         elif selection.isdigit() and int(selection) > 0 and int(selection) < len(list)+1:
-            return list[int(selection)-1]
+            return list[int(selection)-1] #returns the element of list corresponding to user choice
         # If user enters invalid input
         else:
             showInformation("Invalid input")
@@ -212,20 +231,35 @@ def chooseCharacterVoice():
 def welcomeMessage():
     #TODO make this function work
     """ Displays a textbox welcome message to the user """
+    showInformation('THIS IS THE WELCOME MESSAGE')
     
 def characterGenerator():
     #TODO make this function work
     #TODO need to figure out how to have a characterImage and a characterType
-    """ Runs the RPG character generator"""
-    #
-    # characterVoice = makeSound(fileLocation)  
+    """ Runs the RPG character generator. """ 
     # welcomeMessage() #displays a welcome message to user 
     # characterImage = chooseCharacterType()
     # characterVoice = chooseCharacterVoice(characterVoice)
     # characterColor = chooseCharacterColor()
     # 
+    welcomeMessage() #displays the welcome message
+    characterClass = chooseClass()
+    if characterClass == 'WIZARD':
+      voice = getVoice('wizardVoice.wav')
+    elif characterClass == 'ARCHER':
+      voice = getVoice('archerVoice.wav')
+    elif characterClass == 'BARBARIAN':
+      voice = getVoice('barbarianVoice.wav')
     
-    # Just testing the colorize function, this sohuld be edited later
-    # I made the wizard_example_colored in MS paint so the threshold will be way lower when I make the real photos in photoshop
+    voicePitch = chooseCharacterVoice()   
+    if voicePitch == 'HIGH':
+      voice = changePitch(voice, 1.15)      
+    elif voicePitch == 'LOW':
+      voice = changePitch(voice, .85) 
+     
+    #TODO Just testing the colorize function, this should be edited later
+    #TODO I made the wizard_example_colored in MS paint so the threshold will be way lower when I make the real photos in photoshop
     tintColor = chooseCharacterColor()
     colorize(getPicture("wizard_example.jpg"), getPicture("wizard_example_colored.jpg"), green, 200, tintColor, 2.0)
+    play(voice) 
+    playSong(2) #plays the theme song looped 3 times

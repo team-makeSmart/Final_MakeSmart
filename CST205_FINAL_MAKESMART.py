@@ -82,7 +82,7 @@ def changePitch(sound, delta):
   """     delta: allows for a value from .5 to 1.5 to change the pitch.  1.5 == higher pitch, .5 == lower pitch """ 
   """ Returns: """
   """       A sound object with a new pitch """  
-
+  
   samplingRate = samplingRate = getSamplingRate(sound)
   numSamples = getNumSamples(sound)
   #by changing the sampling rate the frequency adjusts the pitch
@@ -99,7 +99,6 @@ def maxSample(sound):
     largest = max(largest,getSample(s))
   factor = 32767.0 / largest
   return largest
-
 
 def maxVolume(sound):
   """ sets the maximum posible volume """
@@ -268,5 +267,6 @@ def characterGen():
     tintColor = chooseCharacterColor() #gets prefered color from user
     #tints the image of character according & shows image
     colorize(picOriginal, picColorReference, green, 50, tintColor, 2.0)  
+
     play(voice) 
     playSong(2) #plays the theme song looped 2 times

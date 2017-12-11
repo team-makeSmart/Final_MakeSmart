@@ -2,67 +2,54 @@
 # Completed by: Team MakeSmart
 # Pavlos Papadonikolakis, Maco Doussias, Jake McGhee
 
-# TITLE: RPG Character Generator
+#NOTE TO INSTRUCTOR:  characterGen() function will run the program
+
+# TITLE: RPG Character Generator Description
 # This program serves as the RPG character generator for a video game
 # Gets user to choose a character type (Wizard, Barbarian, Archer)
-# Gets user to choose a voice for the character (six different voices)
-# Gets user to choose a color for their character (Black, Red, Blue)
-# On completion of choosing character, plays characters voice and displays image
-
-#NOTE:  characterGenerator() function will run the program
-
-
-#TODO this is just preliminary code.... Make major changes to sructure or content as needed
-
-#TODO make a function called characterImage(characterType,characterColor) and returns an image of character
+# Gets user to choose a voice for the character (Low, Medium, High)
+# Gets user to choose a color for their character (Green, Red, Blue)
+# On completion of choosing character, plays characters voice and displays image along with theme song
 
 import os
 
-
-def getSound():
-# TODO remove this function before final submission as it won't be needed in the program.... just here for testing purposes
-  filePath = pickAFile()
-  soundObject = makeSound(filePath)
-  return soundObject
-
-
 def cMaj():
   """ Plays c major chord (C-E-G) for game using diatonic scale"""
-  playNote(60,250,130)  #play c note
-  playNote(64,250,130) #play e note
-  playNote(69,250,130) #play g note 
+  playNote(60,250,90)  #play C note
+  playNote(64,250,90) #play E note
+  playNote(69,250,90) #play G note 
+  
   
 def fMaj():
-  #TODO make sure this is in fact an f maj triad?  This might be wrong
   """ Plays an f Major chord (D-E-G) for game using diatonic scale"""
-  playNote(60,250,130) #play D note
-  playNote(65,250,130) #play F note
-  playNote(69,250,130) #play G note   
+  playNote(60,250,90) #play D note
+  playNote(65,250,90) #play F note
+  playNote(69,250,90) #play G note   
+  
   
 def dMin():
   """ Plays a d minor chord (D-F-E) for game using diatonic scale"""
-  playNote(62,250,130)  #play D note
-  playNote(65,250,130) #play F note
-  playNote(69,250,130) #play G note    
+  playNote(62,250,90)  #play D note
+  playNote(65,250,90) #play F note
+  playNote(69,250,90) #play G note    
+
 
 def playSong(numOfLoops):
   """ Plays a theme song for the game """
   """ Args: integer value defines how many times the theme song will loop """
+  playNote(50, 2000,130)
   for x in range(0,numOfLoops):
     cMaj()
     dMin()
     fMaj()
     dMin()
   #fade away  
-  playNote(60, 250,130)
-  playNote(64, 250,100)    
-  playNote(69, 250,70)
-   
+  playNote(60, 250,90)
+  playNote(64, 250,70)    
+  playNote(69, 250,50)
    
    
 def copy(soundOne, soundTwo, start):
-  #TODO this function could be refactored to be a little bit simpler than it is... 
-  #TODO are two for loops really needed?
    """This functiontion copes the second sound file into the first at the start argument """
    """Args:  """
    """      soundOne: A sound object"""
@@ -87,6 +74,7 @@ def copy(soundOne, soundTwo, start):
       index = index + 1
    return newSound   
    
+   
 def changePitch(sound, delta):
   """ Changes the pitch of a sound object """
   """ Args:  """
@@ -94,12 +82,14 @@ def changePitch(sound, delta):
   """     delta: allows for a value from .5 to 1.5 to change the pitch.  1.5 == higher pitch, .5 == lower pitch """ 
   """ Returns: """
   """       A sound object with a new pitch """  
-  #TODO could add some low level validation to ensure delta arg is within range
+  
   samplingRate = samplingRate = getSamplingRate(sound)
   numSamples = getNumSamples(sound)
-  newSound = makeEmptySound(numSamples,int(samplingRate*delta)) #by changing the sampling rate the frequency adjusts the pitch
+  #by changing the sampling rate the frequency adjusts the pitch
+  newSound = makeEmptySound(numSamples,int(samplingRate*delta))
   newSound = copy(newSound,sound,0)
   return maxVolume(newSound)
+
 
 def maxSample(sound):
   """ sound:(string) the sound file """
@@ -137,7 +127,8 @@ def getPicture(fileName):
     else:
         showInformation("File not found\nPlease select " + fileName)
         return makePicture(pickAFile())
-        
+    
+            
 def getVoice(fileName):
     """ Returns a sound from the same folder that that the program is being run in """
     """ If the sound is not found, it prompts the user to select a sound """
@@ -157,7 +148,8 @@ def getVoice(fileName):
     else:
         showInformation("File not found\nPlease select " + fileName)
         return makeSound(pickAFile())        
-        
+    
+            
 def colorize(picOriginal, picColoredArea, targetColor, threshold, tintColor, multiplier):
     """ Takes a picture and a reference picture and tints the area in the original picture based on the colored area in the reference picture """
     """ 
@@ -195,6 +187,7 @@ def colorize(picOriginal, picColoredArea, targetColor, threshold, tintColor, mul
     show(picOriginal)                                
     return picOriginal   
 
+
 def getSelection(msg, list):
     """ Presents the user with a given list of options """
     """ Checks to see that they have entered a valid option """
@@ -207,7 +200,7 @@ def getSelection(msg, list):
     while true:
          # Get user input
         selection = requestString(msg) 
-        
+    
         # If user selects an option using string input  
         if selection.upper() in list:
             return selection.upper()
@@ -236,52 +229,44 @@ def chooseCharacterColor():
     msg = "Please select a character color"
     return getSelection(msg, colors)
 
+
 def chooseCharacterVoice():
-    #TODO make this function work
     """ Prompts user to choose a character voice """
     
     voices = ['HIGH', 'MEDIUM', 'LOW']
     msg = "Please select a character voice"
     return getSelection(msg, voices)
 
+
 def welcomeMessage():
-    #TODO make this function work
     """ Displays a textbox welcome message to the user """
     showInformation('Welcome to RPG Character Generator!\n'\
                      'You can choose the character of your choice\n'\
                      'change the color of the character and the pitch of its voice!')
                      
     
-def characterGenerator():
-    #TODO make this function work
-    #TODO need to figure out how to have a characterImage and a characterType
+def characterGen():
     """ Runs the RPG character generator. """ 
-    # welcomeMessage() #displays a welcome message to user 
-    # characterImage = chooseCharacterType()
-    # characterVoice = chooseCharacterVoice(characterVoice)
-    # characterColor = chooseCharacterColor()
-    # 
     welcomeMessage() #displays the welcome message
-    characterClass = chooseClass()
+    characterClass = chooseClass() #gets character class form user
+    #Make appropriate sound object based off the character class chosen
     if characterClass == 'WIZARD':
       voice = getVoice('wizardVoice.wav')
     elif characterClass == 'ARCHER':
       voice = getVoice('archerVoice.wav')
     elif characterClass == 'BARBARIAN':
       voice = getVoice('barbarianVoice.wav')
-    
-    voicePitch = chooseCharacterVoice()   
+    voicePitch = chooseCharacterVoice() #gets the preferred voice pitch from user
+    #Alter pitch of voice object according to what user already chose. If medium, don't alter   
     if voicePitch == 'HIGH':
       voice = changePitch(voice, 1.15)      
     elif voicePitch == 'LOW':
       voice = changePitch(voice, .85)
-    else:
-      voice = changePitch(voice, 1)
-     
-    picOriginal = getPicture(str(characterClass.lower() + '.jpg'))
-    picColorReference = getPicture(str(characterClass.lower() + '_color_reference.jpg'))
-    tintColor = chooseCharacterColor()
-    colorize(picOriginal, picColorReference, green, 50, tintColor, 2.0)
-    
+    picOriginal = getPicture(str(characterClass.lower() + '.jpg')) #gets an image based on character class
+    picColorReference = getPicture(str(characterClass.lower() + '_color_reference.jpg')) #gets img layover
+    tintColor = chooseCharacterColor() #gets prefered color from user
+    #tints the image of character according & shows image
+    colorize(picOriginal, picColorReference, green, 50, tintColor, 2.0)  
+
     play(voice) 
-    playSong(2) #plays the theme song looped 3 times
+    playSong(2) #plays the theme song looped 2 times

@@ -257,9 +257,10 @@ def characterGenerator():
     elif voicePitch == 'LOW':
       voice = changePitch(voice, .85) 
      
-    #TODO Just testing the colorize function, this should be edited later
-    #TODO I made the wizard_example_colored in MS paint so the threshold will be way lower when I make the real photos in photoshop
+    picOriginal = getPicture(str(characterClass.lower() + '.jpg'))
+    picColorReference = getPicture(str(characterClass.lower() + '_color_reference.jpg'))
     tintColor = chooseCharacterColor()
-    colorize(getPicture("wizard_example.jpg"), getPicture("wizard_example_colored.jpg"), green, 200, tintColor, 2.0)
+    pic = colorize(picOriginal, picColorReference, green, 50, tintColor, 2.0)
+    
     play(voice) 
     playSong(2) #plays the theme song looped 3 times

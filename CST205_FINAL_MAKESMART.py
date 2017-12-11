@@ -281,7 +281,7 @@ def characterGenerator():
     picOriginal = getPicture(str(characterClass.lower() + '.jpg'))
     picColorReference = getPicture(str(characterClass.lower() + '_color_reference.jpg'))
     tintColor = chooseCharacterColor()
-    pic = colorize(picOriginal, picColorReference, green, 50, tintColor, 2.0)
+    colorize(picOriginal, picColorReference, green, 50, tintColor, 2.0)
     
     play(voice) 
     playSong(2) #plays the theme song looped 3 times
